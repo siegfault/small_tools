@@ -76,11 +76,15 @@ class StudyAction
   def lvl = data[:lvl]
 
   def hp
-    data.dig(:extra, :hp) if basic?
+    if basic?
+      (data.dig(:attributes, :might).to_i * 5) + data[:lvl].to_i + data.dig(:extra, :hp).to_i
+    end
   end
 
   def mp
-    data.dig(:extra, :mp) if basic?
+    if basic?
+      (data.dig(:attributes, :will).to_i * 5) + data[:lvl].to_i + data.dig(:extra, :mp).to_i
+    end
   end
 
   def rank
@@ -93,7 +97,7 @@ class StudyAction
 
   def traits
     if advanced?
-      data.fetch(:traits)
+      data.fetch(:traits, '')
     else
       ''
     end
@@ -116,11 +120,15 @@ class StudyAction
   end
 
   def defense
-    data.dig(:extra, :def) if advanced?
+    if advanced?
+      data.dig(:attributes, :dexterity).to_i + data.dig(:extra, :def).to_i
+    end
   end
 
   def magic_defense
-    data.dig(:extra, :mDef) if advanced?
+    if advanced?
+      data.dig(:attributes, :insight).to_i + data.dig(:extra, :mDef).to_i
+    end
   end
 
   def affinities
