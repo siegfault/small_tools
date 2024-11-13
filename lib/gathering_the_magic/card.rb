@@ -12,13 +12,12 @@ class Card
     ability_score = hash.fetch('Power/Toughness/Battle Score') || ''
 
     if hash.fetch('Type') == 'Battle'
-      battle_score = ability_score.to_i
+      power = ability_score.to_i
     else
       power, toughness = ability_score.split('/').map(&:to_i)
     end
 
     Card.new(
-      battle_score:,
       colors: hash.fetch('Colors').split(',').map(&:strip),
       flavor_text: hash.fetch('Flavor Text'),
       mana_cost: hash.fetch('Mana Cost'),
@@ -35,29 +34,27 @@ class Card
   end
 
   def self.rarities
-    %w[common rare mythic]
+    %w[common uncommon rare mythic]
   end
 
   def self.supertypes
-    %w[legendary]
+    %w[basic kindred legendary snow token]
   end
 
   def self.types
-    %w[battle creature land]
+    %w[artifact battle creature emblem enchantment instant land planeswalker scheme sorcery]
   end
 
-  attr_reader :battle_score, :colors, :flavor_text, :mana_cost, :name, :power, :rules_text, :set_number, :subtype, :supertype, :toughness
+  attr_reader :colors, :flavor_text, :mana_cost, :name, :power, :rules_text, :set_number, :subtype, :supertype, :toughness
 
-  validates :battle_score, presence: true, if: :battle?
   validates :name, presence: true
-  validates :power, presence: true, if: :creature?
+  validates :power, presence: true, if: :powerful?
   validates :toughness, presence: true, if: :creature?
   validates :rarity, inclusion: { in: rarities }
   validates :supertype, inclusion: { in: supertypes }, allow_nil: true
   validates :type, inclusion: { in: types }, presence: true
 
-  def initialize(battle_score:, colors:, flavor_text:, mana_cost:, name:, power:, rarity:, rules_text:, set_number:, subtype:, supertype:, toughness:, type:)
-    @battle_score = battle_score
+  def initialize(colors:, flavor_text:, mana_cost:, name:, power:, rarity:, rules_text:, set_number:, subtype:, supertype:, toughness:, type:)
     @colors = colors
     @flavor_text = flavor_text
     @mana_cost = mana_cost
@@ -118,13 +115,20 @@ class Card
   end
 
   def color_string
-    colors.count >= 3 ? :multicolored : colors.join(',')
+    card_colors = colors.count >= 3 ? 'multicolored' : colors.join(',')
+    card_colors += ', artifact' if artifact?
+    card_colors += ', land' if land?
+    card_colors + ', hybrid, radial'
   end
 
   private
 
   attr_reader :rarity, :type
 
+  def powerful?
+    creature? || battle?
+  end
+  
   def supertype_html
     content_tag('word-list-type-en', [supertype, type].map(&:presence).compact.map(&:humanize).join(' '))
   end
