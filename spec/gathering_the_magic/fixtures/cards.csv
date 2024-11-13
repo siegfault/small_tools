@@ -1,0 +1,9 @@
+Set Number,Rarity,Name,Mana Cost,Supertype,Type,Subtype,Rules Text,Power/Toughness/Battle Score,Flavor Text,Colors,Image Link,Prompt,In Magic Set Editor?,
+,r,The Lands Unreachable,,Legendary,Land,,"When this enters the battlefield gain an emblem ""Lands you control lose all abilities and gain: ""{T}: choose one which hasn't yet been chosen:
+-- Add {W}
+-- Add {G}
+-- Add {R}
+-- Add {U}
+-- Add {B}
+-- Exile all emblems you control and The Lands Unreachable""""",,,colorless,,"magic: the gathering"" style art of a land called ""The Lands Unreachable"" all five colors --niji 6 --ar 11:8",Fin, 
+,c,The Pirate's Pirate,UU,,Creature,Human Pirate Rabble,"Whenever {N} attacks and isn't blocked, you may gain control of target artifact defending player controls. If you do, {N} assigns no combat damage this turn.",1/1,,blue,,,, 

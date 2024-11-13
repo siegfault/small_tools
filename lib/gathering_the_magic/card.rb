@@ -1,0 +1,141 @@
+# frozen_string_literal: true
+
+require 'active_model'
+require 'active_support/core_ext/enumerable'
+require 'action_view/helpers/tag_helper'
+
+class Card
+  include ActiveModel::Validations
+  include ActionView::Helpers::TagHelper
+
+  def self.from_csv(hash)
+    ability_score = hash.fetch('Power/Toughness/Battle Score') || ''
+
+    if hash.fetch('Type') == 'Battle'
+      battle_score = ability_score.to_i
+    else
+      power, toughness = ability_score.split('/').map(&:to_i)
+    end
+
+    Card.new(
+      battle_score:,
+      colors: hash.fetch('Colors').split(',').map(&:strip),
+      flavor_text: hash.fetch('Flavor Text'),
+      mana_cost: hash.fetch('Mana Cost'),
+      name: hash.fetch('Name'),
+      power:,
+      rarity: rarities.detect { |rarity| rarity.start_with?(hash.fetch('Rarity')) },
+      rules_text: hash.fetch('Rules Text'),
+      set_number: hash.fetch('Set Number'),
+      subtype: hash.fetch('Subtype'),
+      supertype: hash.fetch('Supertype')&.downcase,
+      toughness:,
+      type: hash.fetch('Type').downcase,
+    )
+  end
+
+  def self.rarities
+    %w[common rare mythic]
+  end
+
+  def self.supertypes
+    %w[legendary]
+  end
+
+  def self.types
+    %w[battle creature land]
+  end
+
+  attr_reader :battle_score, :colors, :flavor_text, :mana_cost, :name, :power, :rules_text, :set_number, :subtype, :supertype, :toughness
+
+  validates :battle_score, presence: true, if: :battle?
+  validates :name, presence: true
+  validates :power, presence: true, if: :creature?
+  validates :toughness, presence: true, if: :creature?
+  validates :rarity, inclusion: { in: rarities }
+  validates :supertype, inclusion: { in: supertypes }, allow_nil: true
+  validates :type, inclusion: { in: types }, presence: true
+
+  def initialize(battle_score:, colors:, flavor_text:, mana_cost:, name:, power:, rarity:, rules_text:, set_number:, subtype:, supertype:, toughness:, type:)
+    @battle_score = battle_score
+    @colors = colors
+    @flavor_text = flavor_text
+    @mana_cost = mana_cost
+    @name = name
+    @power = power
+    @rarity = rarity
+    @rules_text = rules_text.gsub('{N}', name)
+    @subtype = subtype
+    @supertype = supertype
+    @toughness = toughness
+    @type = type
+  end
+
+  rarities.each do |r|
+    define_method("#{r}?") do
+      rarity == r
+    end
+  end
+
+  supertypes.each do |s|
+    define_method("#{s}?") do
+      super_type == s
+    end
+  end
+
+  types.each do |t|
+    define_method("#{t}?") do
+      type == t.to_s
+    end
+  end
+
+  def to_untyped_file
+    <<~YAML
+      mse_version: 2.1.2
+      card:
+        has_styling: false
+        notes: 
+        time_created: #{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')}
+        time_modified: #{DateTime.now.strftime('%Y-%m-%d %H:%M:%S')}
+        card_color: #{color_string}
+        name: #{name}
+        casting_cost: #{mana_cost}
+        image: 
+        image2: 
+        mainframe_image: 
+        mainframe_image_2: 
+        indicator: colorless
+        super_type: #{supertype_html}
+        sub_type: #{subtype_html}
+        rule_text: #{rules_text}
+        flavor_text: #{flavor_text_html}
+        power: #{power}
+        toughness: #{toughness}
+        card_code_text: 
+        card_code_text_2: 
+        card_code_text_3: 
+    YAML
+  end
+
+  def color_string
+    colors.count >= 3 ? :multicolored : colors.join(',')
+  end
+
+  private
+
+  attr_reader :rarity, :type
+
+  def supertype_html
+    content_tag('word-list-type-en', [supertype, type].map(&:presence).compact.map(&:humanize).join(' '))
+  end
+
+  def subtype_html
+    subtype.split(' ').map do |st|
+      content_tag('word-list-class-en', st)
+    end.join(content_tag('atom-sep', ' '))
+  end
+
+  def flavor_text_html
+    content_tag('i-flavor', '')
+  end
+end
