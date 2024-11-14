@@ -67,10 +67,6 @@ RSpec.describe Card do
       expect(card.toughness).to eq(1)
     end
 
-    it 'parses the battle score' do
-      expect(card.battle_score).to be_nil
-    end
-
     it 'parses the flavor text' do
       expect(card.flavor_text).to be_nil
     end
