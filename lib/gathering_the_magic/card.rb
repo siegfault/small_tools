@@ -105,8 +105,10 @@ class Card
         indicator: colorless
         super_type: #{supertype_html}
         sub_type: #{subtype_html}
-        rule_text: #{rules_text}
-        flavor_text: #{flavor_text_html}
+        rule_text:
+          #{indent(rules_text)}
+        flavor_text:
+          #{indent(flavor_text_html)}
         power: #{power}
         toughness: #{toughness}
         card_code_text: 
@@ -150,5 +152,9 @@ class Card
 
   def flavor_text_html
     content_tag('i-flavor', flavor_text)
+  end
+
+  def indent(text)
+    text.lines.join("\t\t")
   end
 end

@@ -98,8 +98,10 @@ RSpec.describe Card do
             indicator: colorless
             super_type: <word-list-type-en>Creature</word-list-type-en>
             sub_type: <word-list-class-en>Human</word-list-class-en><atom-sep> </atom-sep><word-list-class-en>Pirate</word-list-class-en><atom-sep> </atom-sep><word-list-class-en>Rabble</word-list-class-en>
-            rule_text: Whenever The Pirate's Pirate attacks and isn't blocked, you may gain control of target artifact defending player controls. If you do, The Pirate's Pirate assigns no combat damage this turn.
-            flavor_text: <i-flavor></i-flavor>
+            rule_text:
+              Whenever The Pirate's Pirate attacks and isn't blocked, you may gain control of target artifact defending player controls. If you do, The Pirate's Pirate assigns no combat damage this turn.
+            flavor_text:
+              <i-flavor></i-flavor>
             power: 1
             toughness: 1
             card_code_text: 
