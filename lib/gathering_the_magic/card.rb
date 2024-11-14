@@ -112,6 +112,7 @@ class Card
           #{indent(flavor_text_html)}
         power: #{power}
         toughness: #{toughness}
+        custom_card_number: #{set_number}
         card_code_text: 
         card_code_text_2: 
         card_code_text_3: 

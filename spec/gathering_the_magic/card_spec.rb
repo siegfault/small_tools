@@ -105,6 +105,7 @@ RSpec.describe Card do
               <i-flavor></i-flavor>
             power: 1
             toughness: 1
+            custom_card_number: 
             card_code_text: 
             card_code_text_2: 
             card_code_text_3: 
