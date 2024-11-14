@@ -5,7 +5,7 @@ require_relative '../../lib/gathering_the_magic/card'
 RSpec.describe Card do
   let(:data) do
     {
-      'Set Shorthand' => 'SG',
+      'Set Code' => 'SG',
       'Set Number' => 1,
       'Rarity' => 'c',
       'Name' => "The Pirate's Pirate",

@@ -1,4 +1,4 @@
-Set Shorthand,Set Number,Rarity,Name,Mana Cost,Supertype,Type,Subtype,Rules Text,Power/Toughness/Battle Score,Flavor Text,Colors,Image Link,Prompt,In Magic Set Editor?,
+Set Code,Set Number,Rarity,Name,Mana Cost,Supertype,Type,Subtype,Rules Text,Power/Toughness/Battle Score,Flavor Text,Colors,Image Link,Prompt,In Magic Set Editor?,
 SG,,r,The Lands Unreachable,,Legendary,Land,,"When this enters the battlefield gain an emblem ""Lands you control lose all abilities and gain: ""{T}: choose one which hasn't yet been chosen:
 -- Add {W}
 -- Add {G}

@@ -18,7 +18,7 @@ RSpec.describe CardSet do
 
   let(:lands_unreachable) do
     {
-      'Set Shorthand' => 'SG',
+      'Set Code' => 'SG',
       'Set Number' => nil,
       'Rarity' => 'r',
       'Name' => 'The Lands Unreachable',
@@ -38,7 +38,7 @@ RSpec.describe CardSet do
   end
   let(:pirates_pirate) do
     {
-      'Set Shorthand' => 'SG',
+      'Set Code' => 'SG',
       'Set Number' => nil,
       'Rarity' => 'c',
       'Name' => "The Pirate's Pirate",
