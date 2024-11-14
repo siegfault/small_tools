@@ -115,7 +115,7 @@ class Card
   end
 
   def filename
-    "card_#{name.tr(' ', '').underscore.downcase}"
+    "card #{name.downcase.gsub(/[^a-z0-9\- ]+/i, '' )}"
   end
 
   def color_string
