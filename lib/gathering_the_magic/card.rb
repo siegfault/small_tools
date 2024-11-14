@@ -144,6 +144,6 @@ class Card
   end
 
   def flavor_text_html
-    content_tag('i-flavor', '')
+    content_tag('i-flavor', flavor_text)
   end
 end
