@@ -24,9 +24,9 @@ class Card
       name: hash.fetch('Name'),
       power:,
       rarity: rarities.detect { |rarity| rarity.start_with?(hash.fetch('Rarity')) },
-      rules_text: hash.fetch('Rules Text'),
+      rules_text: hash.fetch('Rules Text') || '',
       set_number: hash.fetch('Set Number'),
-      subtype: hash.fetch('Subtype'),
+      subtype: hash.fetch('Subtype') || '',
       supertype: hash.fetch('Supertype')&.downcase,
       toughness:,
       type: hash.fetch('Type').downcase,
@@ -87,7 +87,7 @@ class Card
   end
 
   def to_untyped_file
-    <<~YAML
+    <<~YAML.gsub('  ', "\t")
       mse_version: 2.1.2
       card:
         has_styling: false
@@ -98,7 +98,7 @@ class Card
         name: #{name}
         casting_cost: #{mana_cost}
         image: 
-        image2: 
+        image_2: 
         mainframe_image: 
         mainframe_image_2: 
         indicator: colorless
@@ -112,6 +112,10 @@ class Card
         card_code_text_2: 
         card_code_text_3: 
     YAML
+  end
+
+  def filename
+    "card_#{name.tr(' ', '').underscore.downcase}"
   end
 
   def color_string

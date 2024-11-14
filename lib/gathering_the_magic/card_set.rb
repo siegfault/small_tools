@@ -17,4 +17,24 @@ class CardSet
   def initialize(cards)
     @cards = cards
   end
+
+  def to_untyped_file
+    Dir.mktmpdir do |dir|
+      cards.each do |card|
+        File.write("#{dir}/#{card.filename}", card.to_untyped_file)
+      end
+
+      puts dir
+      `zip set.zip #{dir}/*`
+    end
+  end
+
+  def to_manifest
+    File.write(
+      'set.manifest',
+      cards.map do |card|
+        "include_file #{card.filename}"
+      end.join("\n")
+    )
+  end
 end

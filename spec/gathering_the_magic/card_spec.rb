@@ -95,7 +95,7 @@ RSpec.describe Card do
             name: The Pirate's Pirate
             casting_cost: UU
             image: 
-            image2: 
+            image_2: 
             mainframe_image: 
             mainframe_image_2: 
             indicator: colorless
