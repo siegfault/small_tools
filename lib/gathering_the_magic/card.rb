@@ -98,7 +98,7 @@ class Card
         card_color: #{color_string}
         name: #{name}
         casting_cost: #{mana_cost}
-        image: 
+        image: #{image_name}
         image_2: 
         mainframe_image: 
         mainframe_image_2: 
@@ -132,6 +132,10 @@ class Card
 
   def powerful?
     creature? || battle?
+  end
+
+  def image_name
+    [set_shorthand, set_number].compact.join('-')
   end
 
   def supertype_html
