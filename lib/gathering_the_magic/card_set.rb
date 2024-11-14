@@ -33,7 +33,7 @@ class CardSet
     File.write(
       'set.manifest',
       cards.map do |card|
-        "include_file #{card.filename}"
+        "include_file: #{card.filename}"
       end.join("\n")
     )
   end
