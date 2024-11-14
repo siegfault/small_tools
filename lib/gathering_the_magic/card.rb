@@ -24,7 +24,7 @@ class Card
       name: hash.fetch('Name'),
       power:,
       rarity: rarities.detect { |rarity| rarity.start_with?(hash.fetch('Rarity')) },
-      rules_text: hash.fetch('Rules Text') || '',
+      rules_text: (hash.fetch('Rules Text') || '').gsub('{N}', hash.fetch('Name')).gsub('{', '<sym>').gsub('}', '</sym>'),
       set_number: hash.fetch('Set Number'),
       subtype: hash.fetch('Subtype') || '',
       supertype: hash.fetch('Supertype')&.downcase,
@@ -61,7 +61,7 @@ class Card
     @name = name
     @power = power
     @rarity = rarity
-    @rules_text = rules_text.gsub('{N}', name)
+    @rules_text = rules_text
     @subtype = subtype
     @supertype = supertype
     @toughness = toughness
@@ -132,7 +132,7 @@ class Card
   def powerful?
     creature? || battle?
   end
-  
+
   def supertype_html
     content_tag('word-list-type-en', [supertype, type].map(&:presence).compact.map(&:humanize).join(' '))
   end
