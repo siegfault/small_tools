@@ -93,6 +93,7 @@ RSpec.describe Card do
             casting_cost: UU
             image: 
             image_2: 
+            rarity: common
             mainframe_image: 
             mainframe_image_2: 
             indicator: colorless

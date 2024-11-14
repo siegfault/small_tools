@@ -100,6 +100,7 @@ class Card
         casting_cost: #{mana_cost}
         image: #{image_name}
         image_2: 
+        rarity: #{rarity}
         mainframe_image: 
         mainframe_image_2: 
         indicator: colorless
