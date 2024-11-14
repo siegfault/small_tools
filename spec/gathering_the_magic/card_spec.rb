@@ -85,7 +85,7 @@ RSpec.describe Card do
 
     it 'parses out to valid YAML-ish' do
       expect(card.to_untyped_file).to eq(
-        <<~YAMLISH
+        <<~YAMLISH.gsub('  ', "\t")
           mse_version: 2.1.2
           card:
             has_styling: false
