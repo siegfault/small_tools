@@ -72,7 +72,7 @@ RSpec.describe Card do
     end
 
     it 'parses the colors' do
-      expect(card.color_string).to eq('blue')
+      expect(card.color_string).to eq('blue, hybrid, radial')
     end
   end
 
@@ -88,7 +88,7 @@ RSpec.describe Card do
             notes: 
             time_created: 2024-10-10 19:02:37
             time_modified: 2024-11-09 16:07:23
-            card_color: blue
+            card_color: blue, hybrid, radial
             name: The Pirate's Pirate
             casting_cost: UU
             image: 
