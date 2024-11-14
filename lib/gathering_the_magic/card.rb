@@ -26,7 +26,7 @@ class Card
       rarity: rarities.detect { |rarity| rarity.start_with?(hash.fetch('Rarity')) },
       rules_text: (hash.fetch('Rules Text') || '').gsub('{N}', hash.fetch('Name')).gsub('{', '<sym>').gsub('}', '</sym>'),
       set_number: hash.fetch('Set Number'),
-      set_shorthand: hash.fetch('Set Shorthand'),
+      set_code: hash.fetch('Set Code'),
       subtype: hash.fetch('Subtype') || '',
       supertype: hash.fetch('Supertype')&.downcase,
       toughness:,
@@ -55,7 +55,7 @@ class Card
   validates :supertype, inclusion: { in: supertypes }, allow_nil: true
   validates :type, inclusion: { in: types }, presence: true
 
-  def initialize(colors:, flavor_text:, mana_cost:, name:, power:, rarity:, rules_text:, set_number:, set_shorthand:, subtype:, supertype:, toughness:, type:)
+  def initialize(colors:, flavor_text:, mana_cost:, name:, power:, rarity:, rules_text:, set_code:, set_number:, subtype:, supertype:, toughness:, type:)
     @colors = colors
     @flavor_text = flavor_text
     @mana_cost = mana_cost
@@ -131,14 +131,14 @@ class Card
 
   private
 
-  attr_reader :rarity, :set_shorthand, :type
+  attr_reader :rarity, :set_code, :type
 
   def powerful?
     creature? || battle?
   end
 
   def image_name
-    [set_shorthand, set_number].compact.join('-')
+    [set_code, set_number].compact.join('-')
   end
 
   def supertype_html
