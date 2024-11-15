@@ -24,8 +24,7 @@ class CardSet
         File.write("#{dir}/#{card.filename}", card.to_untyped_file)
       end
 
-      puts dir
-      `zip set.zip #{dir}/*`
+      `zip -FS set.zip #{dir}/*`
     end
   end
 
